@@ -1,0 +1,27 @@
+CHINMAYA MISSION NEWTON CALENDAR - MAC
+======================================
+
+EASIEST WAY TO OPEN THE APP
+
+1. Unzip the calendar folder.
+2. Double-click: Launch Calendar - Mac.command
+3. A Terminal window will open.
+4. Your browser should open automatically with the calendar.
+5. Keep the Terminal window open while you use the calendar.
+6. When finished, close the Terminal window.
+
+IF macOS BLOCKS THE LAUNCHER
+
+Control-click (or right-click) "Launch Calendar - Mac.command",
+choose Open, and then choose Open again.
+
+You normally only need to do this the first time.
+
+IF IT SAYS PYTHON 3 IS NOT INSTALLED
+
+Install Python 3 from python.org and run the launcher again.
+
+YOUR CALENDAR DATA
+
+Edits are saved in the browser on that Mac. Use Admin > Backup / Handoff
+and Export Calendar Data before moving to another computer.

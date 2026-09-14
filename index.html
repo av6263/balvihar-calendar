@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chinmaya Mission Boston - Newton Chapter Calendar</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Chinmaya Mission Boston</div>
+      <h1>Newton Chapter Calendar</h1>
+    </div>
+    <div class="top-actions">
+      <button id="publicViewBtn" class="btn primary">Public Calendar</button>
+      <button id="adminViewBtn" class="btn">Admin</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="publicView" class="view active">
+      <div class="hero card">
+        <div>
+          <div class="eyebrow">School Year</div>
+          <h2 id="publicTitle">2026-27 Calendar</h2>
+          <p class="muted">Simple to update. Always up to date.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="printBtn" class="btn primary">Print / Save as PDF</button>
+        </div>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid"></div>
+
+      <div class="bottom-grid">
+        <section class="card">
+          <h3>Fall Events</h3>
+          <div id="fallEvents" class="event-list"></div>
+        </section>
+        <section class="card">
+          <h3>Spring Events</h3>
+          <div id="springEvents" class="event-list"></div>
+        </section>
+        <section class="card legend-card">
+          <h3>Legend</h3>
+          <div id="legend" class="legend"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="adminView" class="view">
+      <div class="admin-layout">
+        <aside class="sidebar card">
+          <button class="nav-link active" data-panel="eventsPanel">Events</button>
+          <button class="nav-link" data-panel="settingsPanel">School Year</button>
+          <button class="nav-link" data-panel="locationsPanel">Locations</button>
+          <button class="nav-link" data-panel="backupPanel">Backup / Handoff</button>
+        </aside>
+
+        <div class="admin-content">
+          <section id="eventsPanel" class="panel active card">
+            <div class="panel-head">
+              <div>
+                <div class="eyebrow">Manage Calendar</div>
+                <h2>Events & Exceptions</h2>
+              </div>
+              <button id="addEventBtn" class="btn primary">+ Add Event</button>
+            </div>
+            <div class="toolbar">
+              <input id="searchInput" type="search" placeholder="Search events..." />
+              <select id="filterType"></select>
+              <select id="filterLocation"></select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Date</th><th>Event / Description</th><th>Type</th><th>Location</th><th></th></tr></thead>
+                <tbody id="eventsTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="settingsPanel" class="panel card">
+            <div class="panel-head"><div><div class="eyebrow">Configuration</div><h2>School Year Settings</h2></div></div>
+            <form id="settingsForm" class="form-grid">
+              <label>School Year <input id="schoolYear" required /></label>
+              <label>Normal Class Day <select id="classDay"></select></label>
+              <label>Start Date <input id="startDate" type="date" required /></label>
+              <label>End Date <input id="endDate" type="date" required /></label>
+              <label>Default Location <select id="defaultLocation"></select></label>
+              <div class="form-actions"><button class="btn primary" type="submit">Save Settings</button><button id="duplicateYearBtn" type="button" class="btn">Duplicate School Year</button></div>
+            </form>
+          </section>
+
+          <section id="locationsPanel" class="panel card">
+            <div class="panel-head"><div><div class="eyebrow">Configuration</div><h2>Locations & Colors</h2></div><button id="addLocationBtn" class="btn primary">+ Add Location</button></div>
+            <div id="locationsList" class="location-list"></div>
+          </section>
+
+          <section id="backupPanel" class="panel card">
+            <div class="panel-head"><div><div class="eyebrow">Portable Handoff</div><h2>Backup / Transfer</h2></div></div>
+            <p class="muted">Everything is stored in your browser. Export a JSON backup to move the calendar to another computer or hand it over to someone else.</p>
+            <div class="backup-actions">
+              <button id="exportBtn" class="btn primary">Export Calendar Data</button>
+              <label class="btn file-btn">Import Calendar Data<input id="importInput" type="file" accept="application/json" hidden /></label>
+              <button id="resetBtn" class="btn danger">Reset Demo Data</button>
+            </div>
+            <div class="note"><strong>Handoff tip:</strong> give the next owner this folder plus the exported JSON file. They can open <code>index.html</code>, import the JSON, and continue editing.</div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="eventDialog">
+    <form id="eventForm" method="dialog" class="dialog-form">
+      <div class="dialog-head"><h3 id="eventDialogTitle">Add Event</h3><button id="closeEventDialog" type="button" class="icon-btn">×</button></div>
+      <input id="eventId" type="hidden" />
+      <label>Date <input id="eventDate" type="date" required /></label>
+      <label>Event / Description <input id="eventName" required /></label>
+      <label>Type <select id="eventType"></select></label>
+      <label>Location <select id="eventLocation"></select></label>
+      <label class="checkbox"><input id="showInList" type="checkbox" checked /> Show in Fall/Spring event list</label>
+      <div class="form-actions"><button type="button" id="cancelEventBtn" class="btn">Cancel</button><button type="submit" class="btn primary">Save Event</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="locationDialog">
+    <form id="locationForm" method="dialog" class="dialog-form">
+      <div class="dialog-head"><h3>Add Location</h3><button id="closeLocationDialog" type="button" class="icon-btn">×</button></div>
+      <label>Name <input id="locationName" required /></label>
+      <label>Color <input id="locationColor" type="color" value="#087c98" /></label>
+      <div class="form-actions"><button type="button" id="cancelLocationBtn" class="btn">Cancel</button><button type="submit" class="btn primary">Save Location</button></div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
